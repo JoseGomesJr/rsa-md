@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <math.h>
 #include <string.h>
+#include <stdlib.h>
 //Função para descobrir o MDC
 long long int mdc( long long int a, long long int b)
 {
@@ -164,7 +165,6 @@ long long descriptografar(long long int p,long long int q, long long int e, long
 	auxiliar1 = (p - 1) * (q - 1);
 	n = p * q;
 	d = inversoMod(auxiliar1,e);
-	printf("%lld %lld %lld\n",e , d , auxiliar1);
 	for(contador1 = 0; contador1 < contador; contador1++)
 	{
 		if(teoremadoresto(frasenumerada[contador1], n, d)==28)
@@ -186,24 +186,75 @@ long long criararquivo(long long int chave, long long int e)
 	fprintf(chav,"A chave publica é :%lld %lld",chave, e );
 	fclose(chav);
 }
+//Função para criar o arquivo .txt contendo o texto criptografado
+long long criararquivocr(long long int chave[], long long int n,long long int e,int cont1)
+{
+	int cont;
+	FILE *chav;
+	chav= fopen("cripitografado.txt", "w");
+	for(cont=0; cont<cont1-1; cont++)
+	{
+		fprintf(chav,"%lld ",chave[cont]);
+	}
+	fclose(chav);
+}
+//Função para criar o arquivo .txt contendo o texto descriptografado
+long long criararquivodecr(char chave[])
+{
+	int cont;
+	FILE *chav;
+	chav= fopen("descriptografado.txt", "w");
+	fprintf(chav,"O texto descripitografado e :%s", chave);
+	fclose(chav);
+}
 int main()
 {
 	int contador, contador1, funcao, sair = 0;
 	long long int p, q, e, n, frasen[10000]; char frase [10000];	
 	while(1)
 	{
-		printf("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nSeja bem vindo ao programa de Criptografia RSA!\n");
-		printf("O mesmo foi desenvolvido pela equipe:\nJosé Gomes\nJamerson Mychael\nItalo Oiveira\nCarlos Eduardo\nArthur Padilha\n\n\n\n\n\n\n");
-		printf("--------------------------------------------------------\n");
-		printf("Este programa tem 3 funções, selecione o que deseja fazer:\n1 : gerar a chave pública\n2 : criptografar a mensagem\n3 : descriptografar a mensagem\n");
-		printf("Digite o número da função que deseja ultilizar: ");
+		system("clear");
+		system("tput reset");
+		//printf("\e[H\e[2J");
+		printf("---------------------------------------------------------------------------------------------------------------------\n");
+		printf("---------------------------------------------------------------------------------------------------------------------\n");
+		printf("--                                                      CRIPTOGRAFIA                                               --\n");
+		printf("-                                                                                                                   -\n");
+		printf("-                                                                                                                   -\n");
+		printf("-                                                                                                                   -\n");
+		printf("-                          ||||||||||||||              ||||||||||||||               ||||||||||||                    -\n");
+		printf("-                          |||||    |||||              ||||||||||||||              |||||    |||||                   -\n");
+		printf("-                          |||||    |||||              ||||||                      |||||    |||||                   -\n");
+		printf("-                          |||||    |||||              ||||||                      |||||    |||||                   -\n");
+		printf("-                          |||||    |||||              ||||||                      |||||    |||||                   -\n");
+		printf("-                          |||||||||||||               ||||||||||||||              |||||    |||||                   -\n"); 
+		printf("-                          |||||||||||                 ||||||||||||||              ||||||||||||||                   -\n"); 
+		printf("-                          |||||   ||||                        ||||||              ||||||||||||||                   -\n"); 
+		printf("-                          |||||    ||||                       ||||||              |||||    |||||                   -\n"); 
+		printf("-                          |||||     ||||                      ||||||              |||||    |||||                   -\n"); 
+		printf("-                          |||||      ||||             ||||||||||||||              |||||    |||||                   -\n"); 
+		printf("-                          |||||       ||||            ||||||||||||||              |||||    |||||                   -\n"); 
+		printf("-                                                                                                                   -\n");
+		printf("-                                                                                                                   -\n");
+		printf("-                                                                                                                   -\n");
+		printf("-                                                                                                                   -\n");
+		printf("--                     Arthur Padilha  José Júnior  Jamerson Mychael  Italo Oliveira  Carlos Eduardo               --\n");
+		printf("---------------------------------------------------------------------------------------------------------------------\n");
+		printf("---------------------------------------------------------------------------------------------------------------------\n\n\n\n");
+		printf(" ---------------------------------------------------------------\n");
+		printf("|  Este programa tem 3 funções, selecione o que deseja fazer:   |\n");
+		printf("|  1 = gerar a chave pública  					|\n");
+		printf("|  2 = criptografar a mensagem  				|\n");
+		printf("|  3 = descriptografar a mensagem  				|\n");
+		printf(" ---------------------------------------------------------------\n");
+		printf("  Digite o número da função que deseja ultilizar: ");
 		scanf("%d", &funcao);
-		printf("\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\nBibliotecas carregadas\n");
+		system("clear");
+		system("tput reset");
 		getchar();
 		if(funcao == 1)
 		{
-			printf("--------------------------------------------------------\n");
-			printf("Digite os números primos p e q:");
+			printf("  Digite os números primos p e q:");
 			scanf("%lld%lld", &p, &q);
 			if(p == q)
 			{
@@ -211,13 +262,12 @@ int main()
 			}
 			primo(p, &p);
 			primo(q, &q);
-			printf("Agora digite o expoente que é relativamente primo a (p - 1)(q -1):");
+			printf("  Agora digite o expoente que é relativamente primo a (p - 1)(q -1):");
 			scanf("%lld", &e);
 			verificar(e, p, q, &e);
-			printf("A chave pública da criptografia RSA é: %lld %lld\n", p*q, e);
-			printf("---------------------------------------------------------\n");
+			printf("  A chave pública da criptografia RSA é: %lld %lld", p*q, e);
 			criararquivo(p*q,e);
-			printf("Deseja fazer mais alguma coisa?(Digite 1 para voltar ao menu e 0 para sair)");
+			printf("  Caso deseje voltar ao menu, digite 1 e caso não, digite 0 para encerrar o programa: ");
 			scanf("%d", &sair);
 			if (sair == 1)
 			{
@@ -225,26 +275,26 @@ int main()
 			}
 			else
 			{
-				printf("Obrigado e tenha um bom dia!");
+				printf("  Obrigado e tenha um bom dia!\n");
 				break;
 			}			
 		}
 		if (funcao == 2)
 		{
-			printf("----------------------------------------------------------\n");
-			printf("Digite o texto a ser criptografado: ");
+			printf("  Digite o texto a ser criptografado: ");
 			fgets(frase, 4000, stdin);
-			printf("Digite a chave pública para criptografar:");
+			printf("\n  Digite a chave pública para criptografar:");
 			scanf("%lld%lld", &n, &e);
 			converte(frase, frasen);
 			contador1 = strlen(frase);
 			criptografar(frasen, n, e, contador1);
+			printf("  ");
 			for(contador = 0; contador < contador1 - 1; contador++)
 			{
 				printf("%lld ", frasen[contador]);
 			}
-			printf("\n----------------------------------------------------------\n");
-			printf("Deseja fazer mais alguma coisa?(Digite 1 para voltar ao menu e 0 para sair)");
+			criararquivocr(frasen,n,e,contador1);
+			printf("Caso deseje voltar ao menu, digite 1 e caso não, digite 0 para encerrar o programa: ");
 			scanf("%d", &sair);
 			if (sair == 1)
 			{
@@ -252,14 +302,13 @@ int main()
 			}
 			else
 			{
-				printf("Obrigado e tenha um bom dia!");
+				printf("Obrigado e tenha um bom dia!\n");
 				break;
 			}
 			printf("\n");
 		}
 		if(funcao == 3)
 		{
-			printf("-----------------------------------------------------------\n");
 			printf("Digite os números primos p e q:");
 			scanf("%lld%lld", &p, &q);
 			if(p == q)
@@ -271,21 +320,21 @@ int main()
 			printf("Agora digite o expoente que é relativamente primo a (p - 1)(q -1):");
 			scanf("%lld", &e);
 			verificar(e, p, q, &e);
-			printf("Digite a mensagem encripitada:");
-			printf("Ao final da frase digite -1\n");
-			for(contador = 0; ; contador++)
+			FILE *chav;
+			chav= fopen("cripitografado.txt", "r");
+			contador = 0;
+			while (!feof(chav))
 			{
-				scanf("%lld", &frasen[contador]);
-				if(frasen[contador]==-1)
-				{
-					break;
-				}
+				fscanf(chav,"%lld", &frasen[contador]);
+				contador++;
+
 			}
-			descriptografar(p, q, e, frasen, frase, (contador));
-			printf("A frase descriptografada e:\n");
-			printf("%s", frase);
-			printf("----------------------------------------------------------\n");
-			printf("Deseja fazer mais alguma coisa?(Digite 1 para voltar ao menu e 0 para sair)");
+			fclose(chav);
+			descriptografar(p, q, e, frasen, frase, (contador - 1));
+			printf("A frase descriptografada e: ");
+			printf("%s\n", frase);
+			criararquivodecr(frase);
+			printf("Caso deseje voltar ao menu, digite 1 e caso não, digite 0 para encerrar o programa: ");
 			scanf("%d", &sair);
 			if (sair == 1)
 			{
@@ -293,7 +342,8 @@ int main()
 			}
 			else
 			{
-				printf("Obrigado e tenha um bom dia!");
+				printf("Obrigado e tenha um bom dia!\n");
+
 				break;
 			}
 		}
